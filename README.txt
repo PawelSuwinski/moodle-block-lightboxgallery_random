@@ -1,5 +1,5 @@
 Block  Lightbox Gallery Randomizer
-by Paweł Suwiński <dracono@wp.pl> (or <psuw@wp.pl>
+by Paweł Suwiński <dracono@wp.pl> (or <psuw@wp.pl>)
 
 Block displays a thumbnail of random image from a course's lightboxgallery.
 
