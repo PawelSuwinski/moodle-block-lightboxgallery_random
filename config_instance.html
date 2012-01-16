@@ -1,0 +1,102 @@
+<?php
+
+global $CFG,$COURSE;
+require_once($CFG->libdir.'/moodlelib.php');
+
+if (! $galleries = get_all_instances_in_course(
+    constant(get_class($this).'::LIGHTBOXGALLERY_MODULE_NAME'), 
+    $COURSE
+)) {
+    notice(
+        get_string(
+            'thereareno',
+            'moodle', 
+            get_string('modulenameplural', constant(get_class($this).'::LIGHTBOXGALLERY_MODULE_NAME'))
+        ), 
+        $CFG->wwwroot . '/course/view.php?id=' . $COURSE->id
+    );
+}
+
+foreach($galleries as $gallery) {
+    $course_galleries[$gallery->id] = $gallery->name;
+}
+
+$yesnoMenu['0'] = get_string('no');
+$yesnoMenu['1'] = get_string('yes');
+
+
+?>
+
+<table cellpadding="9" cellspacing="0">
+
+  <tr valign="top">
+    <td align="right">
+      <?php print_string('configgallery', get_class($this)); ?>:
+    </td>
+    <td>
+      <?php 
+	      choose_from_menu (
+              $course_galleries, 
+              "gallery", 
+              isset($this->config->gallery) ? $this->config->gallery : '',
+              '',
+              '',
+              ''
+        );
+      ?>
+    </td>
+  </tr>
+
+  <tr valign="top">
+    <td align="right">
+      <?php print_string('configtitle', get_class($this)); ?>:
+    </td>
+    <td>
+      <input type="text" name="title" size="30" value="<?php echo isset($this->config->title) ? $this->config->title : '' ; ?>" />
+    </td>
+  </tr>
+
+  <tr valign="top">
+    <td align="right">
+      <?php print_string('configshowurl', get_class($this)); ?>:
+    </td>
+    <td>
+      <?php 
+	      choose_from_menu (
+              $yesnoMenu, 
+              "showurl", 
+              isset($this->config->showurl) ? $this->config->showurl : '1',
+              '',
+              '',
+              ''
+        );
+      ?>
+    </td>
+  </tr>
+
+    <td align="right">
+      <?php print_string('configfitwidth', get_class($this)); ?>:
+    </td>
+    <td>
+      <?php 
+	      choose_from_menu (
+              $yesnoMenu, 
+              "fitwidth", 
+              isset($this->config->fitwidth) ? $this->config->fitwidth : '0',
+              '',
+              '',
+              ''
+        );
+      ?>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2" align="center">
+      <input type="submit" value="<?php print_string('savechanges') ?>" />
+    </td>
+  </tr>
+
+
+</table>
+
